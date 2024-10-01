@@ -1,0 +1,32 @@
+name: Keep Repository Active
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # 每天 UTC 时间 00:00 执行
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  create-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: Create empty commit
+        run: |
+          # 生成随机字符串
+          RANDOM_STRING=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+          
+          # 创建一个空提交，使用随机字符串作为提交信息
+          git commit --allow-empty -m "Keep active: $RANDOM_STRING"
+
+      - name: Push changes
+        run: git push
+
+      - name: Random delay
+        run: sleep $((RANDOM % 300))  # 添加 0-300 秒的随机延迟
