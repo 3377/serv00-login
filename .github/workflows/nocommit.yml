@@ -14,8 +14,8 @@ jobs:
 
       - name: Setup Git
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.name "drfy"
+          git config user.email "35794406@qq.com"
 
       - name: Create empty commit
         run: |
